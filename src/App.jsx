@@ -8,7 +8,7 @@ function App() {
   const [text, setText] = useState('') // joce added state for input text
 
   const handleClick = () => { // joce added click handler for button
-    alert(`You typed: ${text}`)
+    alert(`You typed: ${text}`) //instead of the alert, here is where we call up flask api to send the text to the backend and get a response back. For now, we will just alert the text.
   }
 
   return (
