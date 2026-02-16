@@ -1,1 +1,35 @@
 /* We put all the css for the login page here. This is just a placeholder for now, but we can add styles as needed. */
+
+.login-container {
+    height: 300px;
+    width: 600px;
+    /* position: fixed;
+    top: 30%;
+    left: 33%; */
+    border: 1px solid black;
+    padding: 70px;
+}
+
+.loginbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.submit-button {
+    /* position: relative; */
+    margin: 15px auto;
+    /* top: 10px; */
+}
+
+.error-messages {
+    height: 20px;
+    width: 300px;
+    color: red;
+    border: 1px solid red;
+    position: relative;
+    margin: 15px auto;
+    /* top: 50px; */
+}

@@ -61,3 +61,33 @@
   font-size: 1rem;
   cursor: pointer;
 }
+
+/* Layout wrapper */
+.app-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Keep title near top */
+.app-wrapper h1 {
+  margin-top: 3rem;
+}
+
+/* Center content vertically */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Keep template input/button look but align nicely */
+.input-row {
+  display: flex;
+  gap: 1rem;
+}
+

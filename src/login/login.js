@@ -1,1 +1,0 @@
-// Eventually we will have a login page here, but for now this is just a placeholder. We can add styles and functionality as needed. For now, we just want to make sure that the login page is accessible and that we can navigate to it from the main page.
