@@ -91,3 +91,7 @@
   gap: 1rem;
 }
 
+.test-input-container {
+  padding: 1rem;
+  /* border: 1px solid #ccc; */
+}
