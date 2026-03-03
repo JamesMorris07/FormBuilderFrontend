@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import LoginForm from './login/login.jsx';
+import RegisterForm from './register/register.jsx';
 
 function App() {
   const [text, setText] = useState('');
@@ -13,10 +14,16 @@ function App() {
       const res = await fetch('http://127.0.0.1:5000/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: "include",
         body: JSON.stringify({ text }),
       });
 
       const data = await res.json();
+
+      if (res.status === 401) {
+        setMessage("You must be logged in to submit.");
+        return;
+      }
 
       if (data.message) {
         setMessage(`Successfully posted "${text}" to database!`);
@@ -33,7 +40,10 @@ function App() {
     <div className="app-container">
       <h1 className="app-title">Intake Form MVP</h1>
 
-      <LoginForm />
+      <div className="auth-container">
+        <LoginForm />
+        <RegisterForm />
+      </div>
 
       <div className="test-input-container">
         <input
