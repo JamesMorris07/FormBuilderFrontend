@@ -1,8 +1,8 @@
 import { useContext, useState } from 'react';
 import { context, dispatchContext } from '../context.js';
-import './login.css';
+import './register.css';
 
-function LoginForm() {
+function RegisterForm() {
 
     const state = useContext(context);
     const dispatch = useContext(dispatchContext);
@@ -11,39 +11,40 @@ function LoginForm() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    async function handleLogin() {
+    async function handleRegister() {
     if (!email || !password) {
         setError("Please enter both email and password.");
         return;
     }
 
     try {
-        const res = await fetch("http://127.0.0.1:5000/login", {
+        const res = await fetch("http://127.0.0.1:5000/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            credentials: "include", // IMPORTANT for cookies
+            credentials: "include",
             body: JSON.stringify({ email, password }),
         });
 
         const data = await res.json();
 
         if (!res.ok) {
-            setError(data.msg || data.error || "Login failed");
+            setError(data.error || "Registration failed");
             return;
         }
 
-        console.log("Login success:", data);
-        setError("Login successful :)");
+        console.log("User created:", data);
+        setError("Account created! You can now log in.");
 
-        // Optional: redirect later
-        // window.location.href = "/dashboard";
+        // Optional: clear fields
+        setEmail("");
+        setPassword("");
 
     } catch (err) {
         setError("Network error: " + err.message);
     }
-}
+    }
 
     return (
         <div className="login-container">
@@ -66,9 +67,9 @@ function LoginForm() {
                 <div>
                     <button
                         className="submit-button"
-                        onClick={handleLogin}
+                        onClick={handleRegister}
                     >
-                        Login
+                        Register
                     </button>
                 </div>
 
@@ -81,4 +82,4 @@ function LoginForm() {
     );
 }
 
-export default LoginForm;
+export default RegisterForm;

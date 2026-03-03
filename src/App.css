@@ -95,3 +95,21 @@
   padding: 1rem;
   /* border: 1px solid #ccc; */
 }
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+/* Make login bigger */
+.auth-container > :first-child {
+  flex: 2;
+}
+
+/* Make register smaller */
+.auth-container > :last-child {
+  flex: 1;
+}
