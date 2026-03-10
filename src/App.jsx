@@ -2,7 +2,9 @@ import { useState } from 'react';
 import './App.css';
 import LoginForm from './login/login.jsx';
 import RegisterForm from './register/register.jsx';
-
+import DefaultForm from "./Forms/DefaultForm.jsx";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+//import Home from "./Home";
 function App() {
   const [text, setText] = useState('');
   const [message, setMessage] = useState(''); // To show backend confirmation
@@ -37,29 +39,42 @@ function App() {
   };
 
   return (
-    <div className="app-container">
-      <h1 className="app-title">Intake Form MVP</h1>
+  <BrowserRouter>
+    <Routes>
 
-      <div className="auth-container">
-        <LoginForm />
-        <RegisterForm />
-      </div>
+      {/* HOME PAGE */}
+      <Route path="/" element={
+        <div className="app-container">
+          <h1 className="app-title">Intake Form MVP</h1>
 
-      <div className="test-input-container">
-        <input
-          type="text"
-          placeholder="Test POST input"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        />
-        <button onClick={handleClick}>
-          Submit
-        </button>
-      </div>
+          <div className="auth-container">
+            <LoginForm />
+            <RegisterForm />
+          </div>
 
-      {message && <p className="confirmation-message">{message}</p>}
-    </div>
-  );
+          <div className="test-input-container">
+            <input
+              type="text"
+              placeholder="Test POST input"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+            />
+            <button onClick={handleClick}>
+              Submit
+            </button>
+          </div>
+
+          {message && <p className="confirmation-message">{message}</p>}
+        </div>
+      } />
+
+      {/* DEV FORM PAGE */}
+      <Route path="/dev-form" element={<DefaultForm />} />
+
+    </Routes>
+  </BrowserRouter>
+);
+
 }
 
 export default App;
