@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { context, dispatchContext } from '../context.js';
 import './login.css';
 
-function LoginForm() {
+function LoginForm({ setAuthView, setLoggedIn }) {
 
     const state = useContext(context);
     const dispatch = useContext(dispatchContext);
@@ -35,7 +35,7 @@ function LoginForm() {
         }
 
         console.log("Login success:", data);
-        setError("Login successful :)");
+        setLoggedIn(true);
 
         // Optional: redirect later
         // window.location.href = "/dashboard";
@@ -65,10 +65,10 @@ function LoginForm() {
 
                 <div>
                     <button
-                        className="submit-button"
-                        onClick={handleLogin}
+                    className="submit-button"
+                    onClick={handleLogin}
                     >
-                        Login
+                    Login
                     </button>
                 </div>
 
@@ -76,9 +76,20 @@ function LoginForm() {
                     {error}
                 </div>
 
+                <div className="auth-switch">
+                    Don't have an account?{" "}
+                    <span
+                        className="auth-link"
+                        onClick={() => setAuthView("register")}
+                    >
+                        Register here
+                    </span>
+                    .
+                </div>
+
             </div>
         </div>
-    );
+        );
 }
 
 export default LoginForm;

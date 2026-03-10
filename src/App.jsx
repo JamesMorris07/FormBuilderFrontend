@@ -2,79 +2,52 @@ import { useState } from 'react';
 import './App.css';
 import LoginForm from './login/login.jsx';
 import RegisterForm from './register/register.jsx';
+import Datatable from './datatable/datatable.jsx';
+
 import DefaultForm from "./Forms/DefaultForm.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-//import Home from "./Home";
+
 function App() {
-  const [text, setText] = useState('');
-  const [message, setMessage] = useState(''); // To show backend confirmation
 
-  const handleClick = async () => {
-    if (!text) return setMessage('Please enter some text');
-
-    try {
-      const res = await fetch('http://127.0.0.1:5000/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: "include",
-        body: JSON.stringify({ text }),
-      });
-
-      const data = await res.json();
-
-      if (res.status === 401) {
-        setMessage("You must be logged in to submit.");
-        return;
-      }
-
-      if (data.message) {
-        setMessage(`Successfully posted "${text}" to database!`);
-        setText(''); // clear input after success
-      } else if (data.error) {
-        setMessage(`Error: ${data.error}`);
-      }
-    } catch (err) {
-      setMessage(`Network error: ${err.message}`);
-    }
-  };
+  const [authView, setAuthView] = useState("login");
+  const [loggedIn, setLoggedIn] = useState(false);
 
   return (
-  <BrowserRouter>
-    <Routes>
+    <BrowserRouter>
+      <Routes>
 
-      {/* HOME PAGE */}
-      <Route path="/" element={
-        <div className="app-container">
-          <h1 className="app-title">Intake Form MVP</h1>
+        {/* MAIN APP */}
+        <Route path="/" element={
+          loggedIn ? (
+            <Datatable />
+          ) : (
+            <div className="app-wrapper">
+              <h1>Intake Form MVP</h1>
 
-          <div className="auth-container">
-            <LoginForm />
-            <RegisterForm />
-          </div>
+              <div className="main-content">
+                {authView === "login" && (
+                  <LoginForm
+                    setAuthView={setAuthView}
+                    setLoggedIn={setLoggedIn}
+                  />
+                )}
 
-          <div className="test-input-container">
-            <input
-              type="text"
-              placeholder="Test POST input"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
-            <button onClick={handleClick}>
-              Submit
-            </button>
-          </div>
+                {authView === "register" && (
+                  <RegisterForm
+                    setAuthView={setAuthView}
+                  />
+                )}
+              </div>
+            </div>
+          )
+        } />
 
-          {message && <p className="confirmation-message">{message}</p>}
-        </div>
-      } />
+        {/* KEEP HIS PAGE */}
+        <Route path="/dev-form" element={<DefaultForm />} />
 
-      {/* DEV FORM PAGE */}
-      <Route path="/dev-form" element={<DefaultForm />} />
-
-    </Routes>
-  </BrowserRouter>
-);
-
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
