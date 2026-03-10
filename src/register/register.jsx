@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { context, dispatchContext } from '../context.js';
 import './register.css';
 
-function RegisterForm() {
+function RegisterForm({ setAuthView }) {
 
     const state = useContext(context);
     const dispatch = useContext(dispatchContext);
@@ -64,6 +64,9 @@ function RegisterForm() {
                     onChange={(e) => setPassword(e.target.value)}
                 />
 
+                {/* eventually need to add another input box here, for company/organization */}
+                {/* backend is not set up for it yet though, Mar 10th, 2026 */}
+
                 <div>
                     <button
                         className="submit-button"
@@ -75,6 +78,17 @@ function RegisterForm() {
 
                 <div className="error-messages">
                     {error}
+                </div>
+
+                <div className="auth-switch">
+                    Already have an account?{" "}
+                    <span
+                        className="auth-link"
+                        onClick={() => setAuthView("login")}
+                    >
+                        Login here
+                    </span>
+                    .
                 </div>
 
             </div>

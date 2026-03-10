@@ -33,3 +33,17 @@
     margin: 15px auto;
     /* top: 50px; */
 }
+
+.auth-switch {
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+.auth-link {
+    color: #3b82f6;
+    cursor: pointer;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
+}
