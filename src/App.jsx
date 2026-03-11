@@ -3,6 +3,7 @@ import './App.css';
 import LoginForm from './login/login.jsx';
 import RegisterForm from './register/register.jsx';
 import Datatable from './datatable/datatable.jsx';
+import DataDisplay from "./DataDisplay/DataDisplay.jsx";
 
 import DefaultForm from "./Forms/DefaultForm.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -15,11 +16,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-
-        {/* MAIN APP */}
         <Route path="/" element={
           loggedIn ? (
-            <Datatable />
+            <DataDisplay  /> //changed to datadisplay
           ) : (
             <div className="app-wrapper">
               <h1>Intake Form MVP</h1>
@@ -44,6 +43,8 @@ function App() {
 
         {/* KEEP HIS PAGE */}
         <Route path="/dev-form" element={<DefaultForm />} />
+        {/* Data display page */}
+      <Route path="/data" element={<DataDisplay />} />
 
       </Routes>
     </BrowserRouter>
