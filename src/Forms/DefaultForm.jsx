@@ -2,26 +2,22 @@ import { useState } from "react";
 
 export default function FormComponent() {
   const questions = [
-    "What is your name?",
-    "What is your email?",
-    "What is your major?",
-    "What year are you in school?",
-    "What is your favorite programming language?",
-    "What is your career goal?",
-    "What tools do you use most?",
-    "What is your biggest challenge in coding?",
-    "What project are you most proud of?",
-    "Any additional comments?"
-  ];
+  { key: "name", label: "What is your name?" },
+  { key: "email", label: "What is your email?" },
+  { key: "reason_for_visit", label: "What is your reason for visiting?" },
+  { key: "date", label: "date of visit" },
+  { key: "insurance_provider", label: "What is your insurance provider?" },
+  { key: "allergies", label: "Do you have any allergies?" },
+];
 
   const [answers, setAnswers] = useState({});
 
-  const handleChange = (index, value) => {
-    setAnswers({
-      ...answers,
-      [index]: value
-    });
-  };
+  const handleChange = (key, value) => {
+  setAnswers({
+    ...answers,
+    [key]: value
+  });
+};
 
   const handleSubmit = async (e) => {
   e.preventDefault();
@@ -54,25 +50,26 @@ export default function FormComponent() {
       <h1>default form</h1>
 
       <form onSubmit={handleSubmit}>
-        {questions.map((question, index) => (
-          <div key={index} style={{ marginBottom: "20px" }}>
-            <label>
-              <strong>{question}</strong>
-            </label>
-            <br />
+        {questions.map((question) => (
+  <div key={question.key} style={{ marginBottom: "20px" }}>
+    <label>
+      <strong>{question.label}</strong>
+    </label>
 
-            <input
-              type="text"
-              value={answers[index] || ""}
-              onChange={(e) => handleChange(index, e.target.value)}
-              style={{
-                width: "100%",
-                padding: "8px",
-                marginTop: "5px"
-              }}
-            />
-          </div>
-        ))}
+    <br />
+
+    <input
+      type="text"
+      value={answers[question.key] || ""}
+      onChange={(e) => handleChange(question.key, e.target.value)}
+      style={{
+        width: "100%",
+        padding: "8px",
+        marginTop: "5px"
+      }}
+    />
+  </div>
+))}
 
         <button
           type="submit"

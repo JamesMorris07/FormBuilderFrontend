@@ -18,7 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={
           loggedIn ? (
-            <Datatable />
+            <DataDisplay  /> //changed to datadisplay
           ) : (
             <div className="app-wrapper">
               <h1>Intake Form MVP</h1>
