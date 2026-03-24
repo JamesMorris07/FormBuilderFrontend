@@ -9,10 +9,12 @@ function RegisterForm({ setAuthView }) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [organization, setOrganization] = useState('');
     const [error, setError] = useState('');
+    
 
     async function handleRegister() {
-    if (!email || !password) {
+    if (!email || !password || !organization) {
         setError("Please enter both email and password.");
         return;
     }
@@ -24,7 +26,7 @@ function RegisterForm({ setAuthView }) {
                 "Content-Type": "application/json",
             },
             credentials: "include",
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ email, password, organization }),
         });
 
         const data = await res.json();
@@ -40,6 +42,7 @@ function RegisterForm({ setAuthView }) {
         // Optional: clear fields
         setEmail("");
         setPassword("");
+        setOrganization("");
 
     } catch (err) {
         setError("Network error: " + err.message);
@@ -62,6 +65,13 @@ function RegisterForm({ setAuthView }) {
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                />
+
+                <div>Organization</div>
+                <input
+                    type="text"
+                    value={organization}
+                    onChange={(e) => setOrganization(e.target.value)}
                 />
 
                 {/* eventually need to add another input box here, for company/organization */}
