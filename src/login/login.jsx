@@ -1,11 +1,13 @@
 import { useContext, useState } from 'react';
 import { context, dispatchContext } from '../context.js';
 import './login.css';
+import { useNavigate } from "react-router-dom";
 
 function LoginForm({ setAuthView, setLoggedIn }) {
 
     const state = useContext(context);
     const dispatch = useContext(dispatchContext);
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -18,7 +20,7 @@ function LoginForm({ setAuthView, setLoggedIn }) {
     }
 
     try {
-        const res = await fetch("http://127.0.0.1:5000/login", {
+        const res = await fetch("http://localhost:5000/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -36,6 +38,7 @@ function LoginForm({ setAuthView, setLoggedIn }) {
 
         console.log("Login success:", data);
         setLoggedIn(true);
+        navigate("/data");
 
         // Optional: redirect later
         // window.location.href = "/dashboard";
