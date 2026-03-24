@@ -1,47 +1,69 @@
 import { useEffect, useState } from "react";
+import { DataGrid } from "@mui/x-data-grid";
 
-export default function DataDisplay() {
+export default function DataDisplay({ setLoggedIn }) {
   const [submissions, setSubmissions] = useState([]);
 
+  function handleLogout() {
+    fetch("http://localhost:5000/logout", {
+      method: "POST",
+      credentials: "include",
+    }).then(() => {
+      setLoggedIn(false);
+    });
+  }
+
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/forms", {
+    fetch("http://localhost:5000/forms", {
       method: "GET",
       credentials: "include"
     })
-      .then((res) => res.json())
+      .then(async (res) => {
+        console.log("STATUS:", res.status);
+
+        if (!res.ok) {
+          const text = await res.text();
+          console.error("ERROR RESPONSE:", text);
+          throw new Error("Request failed");
+        }
+
+        return res.json();
+      })
       .then((data) => {
+        console.log("FORMS DATA:", data);
         setSubmissions(data);
       })
-      .catch((err) => console.error("Error fetching submissions:", err));
+      .catch((err) => {
+        console.error("Error fetching submissions:", err);
+      });
   }, []);
+
+  const rows = submissions.map((s) => ({
+    id: s._id,
+    formId: s.formId,
+    answers: JSON.stringify(s.answers),
+  }));
+
+  const columns = [
+    { field: "id", headerName: "ID", width: 220 },
+    { field: "formId", headerName: "Form ID", width: 150 },
+    { field: "answers", headerName: "Answers", width: 400 },
+  ];
 
   return (
     <div style={{ padding: "40px" }}>
+      <button onClick={handleLogout}>Logout</button>
+
       <h1>Form Submissions</h1>
 
-      <table border="1" cellPadding="10">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Form ID</th>
-            <th>User ID</th>
-            <th>Answers</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {submissions.map((submission) => (
-            <tr key={submission._id}>
-              <td>{submission._id}</td>
-              <td>{submission.formId}</td>
-              <td>{submission.userId}</td>
-              <td>
-                <pre>{JSON.stringify(submission.answers, null, 2)}</pre>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div style={{ height: 500, width: "100%" }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={5}
+          rowsPerPageOptions={[5, 10]}
+        />
+      </div>
     </div>
   );
 }
