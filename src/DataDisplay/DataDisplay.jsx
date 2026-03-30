@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+//TODO: display the data in table no JSON, drop garbage data
 export default function DataDisplay() {
   const [submissions, setSubmissions] = useState([]);
 
