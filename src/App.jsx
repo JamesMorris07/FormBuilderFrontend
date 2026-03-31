@@ -6,11 +6,15 @@ import LoginForm from './login/login.jsx';
 import RegisterForm from './register/register.jsx';
 import DataDisplay from "./datadisplay/datadisplay.jsx";
 import DefaultForm from "./Forms/DefaultForm.jsx";
+import FormsList from "./pages/formslist/formslist.jsx";
+import FormDataPage from "./pages/formdatapage/formdatapage.jsx";
 
 function App() {
   const [authView, setAuthView] = useState("login");
   const [loggedIn, setLoggedIn] = useState(null);
+  const [userOrg, setUserOrg] = useState(null); // <- store user's organization
 
+  // Check authentication and get organization
   useEffect(() => {
     async function checkAuth() {
       try {
@@ -19,7 +23,13 @@ function App() {
           credentials: "include",
         });
 
-        setLoggedIn(res.ok);
+        if (res.ok) {
+          const data = await res.json();
+          setLoggedIn(true);
+          setUserOrg(data.organization); // <- set org from backend
+        } else {
+          setLoggedIn(false);
+        }
       } catch {
         setLoggedIn(false);
       }
@@ -38,8 +48,8 @@ function App() {
         <Route
           path="/"
           element={
-            loggedIn ? (
-              <Navigate to="/data" />
+            loggedIn && userOrg ? (
+              <Navigate to={`/${userOrg}`} />
             ) : (
               <div className="app-wrapper">
                 <h1>Intake Form MVP</h1>
@@ -48,6 +58,7 @@ function App() {
                   <LoginForm
                     setAuthView={setAuthView}
                     setLoggedIn={setLoggedIn}
+                    setUserOrg={setUserOrg} // <- pass setter to LoginForm
                   />
                 ) : (
                   <RegisterForm setAuthView={setAuthView} />
@@ -57,19 +68,24 @@ function App() {
           }
         />
 
-        {/* PROTECTED ROUTE */}
+        {/* ORG FORMS LIST */}
         <Route
-          path="/data"
+          path="/:orgName"
           element={
-            loggedIn ? (
-              <DataDisplay setLoggedIn={setLoggedIn} />
-            ) : (
-              <Navigate to="/" />
-            )
+            loggedIn ? <FormsList setLoggedIn={setLoggedIn} /> : <Navigate to="/" />
           }
         />
 
+        {/* DEV FORM */}
         <Route path="/dev-form" element={<DefaultForm />} />
+
+        {/* INDIVIDUAL FORM DATA PAGE */}
+        <Route
+          path="/:orgName/:formId"
+          element={
+            loggedIn ? <FormDataPage setLoggedIn={setLoggedIn} /> : <Navigate to="/" />
+          }
+        />
 
       </Routes>
     </BrowserRouter>
