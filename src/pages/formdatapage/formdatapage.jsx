@@ -74,7 +74,11 @@ export default function FormDataPage({ setLoggedIn }) {
         });
         const formsData = await formsRes.json();
         const match = formsData.find(f => f.id === formId);
-        if (match) setTitle(match.title);
+        if (match) {
+            setTitle(match.title);
+        } else {
+            setTitle("Form not found"); // ← show this if the form doesn't exist
+        }   
 
         } catch (err) {
         console.error(err);
