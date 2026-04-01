@@ -69,7 +69,7 @@ export default function FormDataPage({ setLoggedIn }) {
         setRows(rows);
 
         // get form title
-        const formsRes = await fetch("http://localhost:5000/built-forms", {
+        const formsRes = await fetch("http://localhost:5000/built-forms-list", {
             credentials: "include",
         });
         const formsData = await formsRes.json();
