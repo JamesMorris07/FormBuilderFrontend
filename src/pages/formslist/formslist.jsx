@@ -34,7 +34,7 @@ export default function FormsList({ setLoggedIn }) {
         }
 
         // 📥 Fetch forms
-        const res = await fetch("http://localhost:5000/built-forms", {
+        const res = await fetch("http://localhost:5000/built-forms-list", {
           credentials: "include",
         });
 
