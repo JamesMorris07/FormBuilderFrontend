@@ -6,6 +6,7 @@ import LoginForm from './login/login.jsx';
 import RegisterForm from './register/register.jsx';
 import DataDisplay from "./datadisplay/datadisplay.jsx";
 import DefaultForm from "./Forms/DefaultForm.jsx";
+import DisplayForm from "./DisplayForm/DisplayForm.jsx";
 import FormsList from "./pages/formslist/formslist.jsx";
 import FormDataPage from "./pages/formdatapage/formdatapage.jsx";
 
@@ -78,6 +79,7 @@ function App() {
 
         {/* DEV FORM */}
         <Route path="/dev-form" element={<DefaultForm />} />
+        <Route path="/display-form" element={<DisplayForm />} />
 
         {/* INDIVIDUAL FORM DATA PAGE */}
         <Route
