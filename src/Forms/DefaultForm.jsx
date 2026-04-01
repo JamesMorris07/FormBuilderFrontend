@@ -85,4 +85,3 @@ export default function FormComponent() {
     </div>
   );
 }
-//chatgpt did the initial styling, will need to be redone once we have the actual form questions and structure finalized.

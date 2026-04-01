@@ -6,6 +6,7 @@ import LoginForm from './login/login.jsx';
 import RegisterForm from './register/register.jsx';
 import DataDisplay from "./datadisplay/datadisplay.jsx";
 import DefaultForm from "./Forms/DefaultForm.jsx";
+import DisplayForm from "./DisplayForm/DisplayForm.jsx";
 
 function App() {
   const [authView, setAuthView] = useState("login");
@@ -70,6 +71,7 @@ function App() {
         />
 
         <Route path="/dev-form" element={<DefaultForm />} />
+        <Route path="/display-form" element={<DisplayForm />} />
 
       </Routes>
     </BrowserRouter>
