@@ -7,7 +7,7 @@ function DisplayForm() {
   const [error, setError] = useState(null);
 
   // Set the form ID you want to display
-  const formId = "form_frowns_registration";
+  const formId = "form_frowns_intake";
 
   useEffect(() => {
     fetch("http://127.0.0.1:5000/built-forms")
