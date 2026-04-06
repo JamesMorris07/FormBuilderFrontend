@@ -67,7 +67,7 @@ export default function FormDataPage({ setLoggedIn }) {
   const processRowUpdate = async (updatedRow, originalRow) => {
     const { id, ...responseFields } = updatedRow;
     try {
-      const res = await fetch(`http://localhost:5000/forms/${id}`, {
+      const res = await fetch(`http://localhost:5000/form-submissions/${id}`, {
         method: "PUT",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -104,7 +104,7 @@ export default function FormDataPage({ setLoggedIn }) {
           return;
         }
 
-        const res = await fetch("http://localhost:5000/forms", {
+        const res = await fetch("http://localhost:5000/form-submissions", {
           credentials: "include",
         });
         const data = await res.json();

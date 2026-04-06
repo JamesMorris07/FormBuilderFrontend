@@ -63,7 +63,7 @@ export default function FormsList({ setLoggedIn }) {
         <div
           key={form.id}
           onClick={() => navigate(`/${userOrg}/${form.id}`)}
-          style={{ cursor: "pointer", margin: "10px 0", color: "blue" }}
+          style={{ cursor: "pointer", margin: "10px 0", color: "lightblue" }}
         >
           {form.title}
         </div>
