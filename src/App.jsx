@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { CircularProgress, Box, Container, Typography } from "@mui/material";
+
 import './App.css';
 
 import LoginForm from './login/login.jsx';
@@ -38,7 +40,13 @@ function App() {
     checkAuth();
   }, []);
 
-  if (loggedIn === null) return <div>Loading...</div>;
+  if (loggedIn === null) {
+    return (
+      <Box display="flex" justifyContent="center" mt={10}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <BrowserRouter>
@@ -51,19 +59,24 @@ function App() {
             loggedIn && userOrg ? (
               <Navigate to={`/${userOrg}`} />
             ) : (
-              <div className="app-wrapper">
-                <h1>Intake Form MVP</h1>
+              <Container maxWidth="sm">
+                <Box mt={8} textAlign="center">
+                  <Typography variant="h4" gutterBottom>
+                    Intake Form MVP
+                  </Typography>
 
-                {authView === "login" ? (
-                  <LoginForm
-                    setAuthView={setAuthView}
-                    setLoggedIn={setLoggedIn}
-                    setUserOrg={setUserOrg} // <- pass setter to LoginForm
-                  />
-                ) : (
-                  <RegisterForm setAuthView={setAuthView} />
-                )}
-              </div>
+                  {authView === "login" ? (
+                    <LoginForm
+                      setAuthView={setAuthView}
+                      setLoggedIn={setLoggedIn}
+                      setUserOrg={setUserOrg} // <- pass setter to LoginForm
+                    />
+                  ) : (
+                    <RegisterForm setAuthView={setAuthView} />
+                  )}
+
+                </Box>
+              </Container>
             )
           }
         />
