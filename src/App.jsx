@@ -4,7 +4,6 @@ import './App.css';
 
 import LoginForm from './login/login.jsx';
 import RegisterForm from './register/register.jsx';
-import DataDisplay from "./datadisplay/datadisplay.jsx";
 import DefaultForm from "./Forms/DefaultForm.jsx";
 import DisplayForm from "./DisplayForm/DisplayForm.jsx";
 import FormsList from "./pages/formslist/formslist.jsx";

@@ -15,6 +15,12 @@ export default function FormsList({ setLoggedIn }) {
     }).then(() => setLoggedIn(false));
   }
 
+  function handleCreateForm() {
+    // eventually this needs to navigate to a form builder page
+    // dummy button for now
+    alert("Create Form clicked! This will navigate to the form builder in the future.");
+  }
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -27,13 +33,13 @@ export default function FormsList({ setLoggedIn }) {
         const realOrg = authData.organization;
         setUserOrg(realOrg);
 
-        // 🚨 Fix URL if someone typed wrong org
+        // Fix URL if someone typed wrong org
         if (orgName !== realOrg) {
           navigate(`/${realOrg}`, { replace: true });
           return;
         }
 
-        // 📥 Fetch forms
+        // Fetch forms
         const res = await fetch("http://localhost:5000/built-forms-list", {
           credentials: "include",
         });
@@ -57,6 +63,9 @@ export default function FormsList({ setLoggedIn }) {
   return (
     <div style={{ textAlign: "left" }}>
       <button onClick={handleLogout}>Logout</button>
+      <br></br>
+      <br></br>
+      <button onClick={handleCreateForm}>Create New Form</button>
       <h2>{userOrg} Forms</h2>
 
       {forms.map((form) => (
