@@ -5,11 +5,15 @@ import {
   GridRowModes,
   GridRowEditStopReasons,
 } from "@mui/x-data-grid";
+import { Typography, Box, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+
+import Layout from "../../components/Layout";
+
 
 export default function FormDataPage({ setLoggedIn }) {
   const { formId, orgName } = useParams();
@@ -148,15 +152,15 @@ export default function FormDataPage({ setLoggedIn }) {
   }, [formId, orgName, navigate]);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <div style={{ width: "100%", maxWidth: "800px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-          <button onClick={() => navigate(`/${userOrg || ""}`)}>← Back</button>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-        <h2>{title || formId}</h2>
+    <Layout userOrg={userOrg} setLoggedIn={setLoggedIn}>
+      <Box maxWidth="900px" mx="auto">
+        
+        {/* Header */}
+        <Typography variant="h4" gutterBottom>
+          {title || formId}
+        </Typography>
 
-        {/* Edit toolbar */}
+        {/* Editability toolbar */}
         <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", marginBottom: 4 }}>
           {!selectedRowId && (
             <span style={{ fontSize: 13, color: "#888", marginRight: 8 }}>
@@ -186,10 +190,12 @@ export default function FormDataPage({ setLoggedIn }) {
           )}
         </div>
 
+        {/* DataGrid */}
         <div style={{ height: 500 }}>
           <DataGrid
             rows={rows}
             columns={columns}
+            loading={!rows.length}
             pageSize={5}
             rowsPerPageOptions={[5, 10]}
             editMode="row"
@@ -206,7 +212,8 @@ export default function FormDataPage({ setLoggedIn }) {
             }}
           />
         </div>
-      </div>
-    </div>
+
+      </Box>
+    </Layout>
   );
 }

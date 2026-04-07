@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import { context, dispatchContext } from '../context.js';
-import './register.css';
+import { TextField, Button, Paper, Typography, Box } from "@mui/material";
+// import './register.css';
 
 function RegisterForm({ setAuthView }) {
 
@@ -50,59 +51,62 @@ function RegisterForm({ setAuthView }) {
     }
 
     return (
-        <div className="login-container">
-            <div className="loginbox">
+        <Paper
+            elevation={3}
+            sx={{
+                padding: 4,
+                maxWidth: 600,
+                width: "100%",
+                margin: "auto",
+                mt: 3,
+            }}
+        >
+            <Typography variant="h5" gutterBottom>
+            Register
+            </Typography>
 
-                <div>Email</div>
-                <input
-                    type="text"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
+            <Box display="flex" flexDirection="column" gap={2}>
+            <TextField
+                label="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                fullWidth
+            />
 
-                <div>Password</div>
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+            <TextField
+                label="Password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                fullWidth
+            />
 
-                <div>Organization</div>
-                <input
-                    type="text"
-                    value={organization}
-                    onChange={(e) => setOrganization(e.target.value)}
-                />
+            <TextField
+                label="Organization"
+                value={organization}
+                onChange={(e) => setOrganization(e.target.value)}
+                fullWidth
+            />
 
-                {/* eventually need to add another input box here, for company/organization */}
-                {/* backend is not set up for it yet though, Mar 10th, 2026 */}
+            <Button variant="contained" onClick={handleRegister}>
+                Register
+            </Button>
 
-                <div>
-                    <button
-                        className="submit-button"
-                        onClick={handleRegister}
-                    >
-                        Register
-                    </button>
-                </div>
+            {error && (
+                <Typography color="error">{error}</Typography>
+            )}
 
-                <div className="error-messages">
-                    {error}
-                </div>
-
-                <div className="auth-switch">
-                    Already have an account?{" "}
-                    <span
-                        className="auth-link"
-                        onClick={() => setAuthView("login")}
-                    >
-                        Login here
-                    </span>
-                    .
-                </div>
-
-            </div>
-        </div>
+            <Typography variant="body2">
+                Already have an account?{" "}
+                <span
+                style={{ color: "#1976d2", cursor: "pointer" }}
+                onClick={() => setAuthView("login")}
+                >
+                Login here
+                </span>
+            </Typography>
+            </Box>
+        </Paper>
     );
 }
 

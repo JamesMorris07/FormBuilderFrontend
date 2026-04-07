@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import './login.css';
+// import './login.css';
+
+import { TextField, Button, Paper, Typography, Box } from "@mui/material";
 
 function LoginForm({ setAuthView, setLoggedIn, setUserOrg }) {
   const [email, setEmail] = useState('');
@@ -41,39 +43,46 @@ function LoginForm({ setAuthView, setLoggedIn, setUserOrg }) {
   }
 
   return (
-    <div className="login-container">
-      <div className="loginbox">
-        <div>Email</div>
-        <input
-          type="text"
+    <Paper elevation={3} sx={{ padding: 4 }}>
+      <Typography variant="h5" gutterBottom>
+        Login
+      </Typography>
+
+      <Box display="flex" flexDirection="column" gap={2}>
+        <TextField
+          label="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          fullWidth
         />
 
-        <div>Password</div>
-        <input
+        <TextField
+          label="Password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          fullWidth
         />
 
-        <div>
-          <button className="submit-button" onClick={handleLogin}>
-            Login
-          </button>
-        </div>
+        <Button variant="contained" onClick={handleLogin}>
+          Login
+        </Button>
 
-        <div className="error-messages">{error}</div>
+        {error && (
+          <Typography color="error">{error}</Typography>
+        )}
 
-        <div className="auth-switch">
-          Don't have an account?{" "}
-          <span className="auth-link" onClick={() => setAuthView("register")}>
+        <Typography variant="body2">
+          Don’t have an account?{" "}
+          <span
+            style={{ color: "#1976d2", cursor: "pointer" }}
+            onClick={() => setAuthView("register")}
+          >
             Register here
           </span>
-          .
-        </div>
-      </div>
-    </div>
+        </Typography>
+      </Box>
+    </Paper>
   );
 }
 

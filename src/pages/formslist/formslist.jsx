@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Layout from "../../components/Layout";
+import { Typography, Button, List, ListItem, ListItemText } from "@mui/material";
 
 export default function FormsList({ setLoggedIn }) {
   const [forms, setForms] = useState([]);
@@ -16,8 +18,11 @@ export default function FormsList({ setLoggedIn }) {
   }
 
   function handleCreateForm() {
-    // eventually this needs to navigate to a form builder page
     // dummy button for now
+
+    // eventually this needs to navigate to a form builder page
+    // I think this button will render FormBuilder.jsx eventually
+
     alert("Create Form clicked! This will navigate to the form builder in the future.");
   }
 
@@ -58,25 +63,35 @@ export default function FormsList({ setLoggedIn }) {
   }, [orgName]);
 
   if (loading) return <div>Loading forms...</div>;
-  if (forms.length === 0) return <div>No forms found</div>;
+  if (forms.length === 0) return <div>
+    No forms found
+
+    <button onClick={handleLogout}>Logout</button>
+    
+
+  </div>;
 
   return (
-    <div style={{ textAlign: "left" }}>
-      <button onClick={handleLogout}>Logout</button>
-      <br></br>
-      <br></br>
-      <button onClick={handleCreateForm}>Create New Form</button>
-      <h2>{userOrg} Forms</h2>
+    <Layout userOrg={userOrg} setLoggedIn={setLoggedIn}>
+      <Typography variant="h4" gutterBottom>
+        {userOrg} Forms
+      </Typography>
 
-      {forms.map((form) => (
-        <div
-          key={form.id}
-          onClick={() => navigate(`/${userOrg}/${form.id}`)}
-          style={{ cursor: "pointer", margin: "10px 0", color: "lightblue" }}
-        >
-          {form.title}
-        </div>
-      ))}
-    </div>
+      <Button variant="contained" sx={{ mb: 2 }} onClick={handleCreateForm}>
+        Create New Form
+      </Button>
+
+      <List>
+        {forms.map((form) => (
+          <ListItem
+            button
+            key={form.id}
+            onClick={() => navigate(`/${userOrg}/${form.id}`)}
+          >
+            <ListItemText primary={form.title} />
+          </ListItem>
+        ))}
+      </List>
+    </Layout>
   );
 }
