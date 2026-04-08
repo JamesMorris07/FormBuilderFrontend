@@ -1,4 +1,3 @@
-// src/DisplayForm/displayform.jsx
 import { useState, useEffect } from "react";
 
 function DisplayForm() {
@@ -7,7 +6,7 @@ function DisplayForm() {
   const [error, setError] = useState(null);
 
   // Set the form ID you want to display
-  const formId = "form_frowns_intake";
+  const formId = "form_Smiles_test2";
 
   useEffect(() => {
     fetch("http://127.0.0.1:5000/built-forms")
@@ -34,27 +33,60 @@ function DisplayForm() {
 
   if (!selectedForm) return <div>Form not found</div>;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = {};
+
+    const responses = {};
 
     selectedForm.fields.forEach((field) => {
       if (field.type === "radio") {
-        const checked = e.target[field.id].value;
-        formData[field.id] = checked;
+        const selected = e.target.querySelector(
+          `input[name="${field.id}"]:checked`
+        );
+        responses[field.id] = selected ? selected.value : "";
       } else {
-        formData[field.id] = e.target[field.id].value;
+        responses[field.id] = e.target[field.id]?.value || "";
       }
     });
 
-    console.log("Form Submitted:", formData);
-    // TODO: send formData to backend via fetch("/submit-form", { ... })
+    const submissionPayload = {
+      organization: selectedForm.organization || "Unknown",
+      formId: selectedForm.id,
+      submittedAt: new Date().toISOString(),
+      responses: responses,
+    };
+
+    console.log("Submitting:", submissionPayload);
+
+    try {
+      const res = await fetch("http://127.0.0.1:5000/form-submissions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(submissionPayload),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to submit form");
+      }
+
+      const data = await res.json();
+      console.log("Success:", data);
+
+      alert("Form submitted successfully!");
+      e.target.reset(); // clear form after submit
+    } catch (err) {
+      console.error("Submission error:", err);
+      alert("Error submitting form");
+    }
   };
 
   return (
     <div>
       <h2>{selectedForm.title}</h2>
       <p>{selectedForm.description}</p>
+
       <form onSubmit={handleSubmit}>
         {selectedForm.fields.map((field) => {
           switch (field.type) {
@@ -71,6 +103,7 @@ function DisplayForm() {
                   />
                 </div>
               );
+
             case "number":
               return (
                 <div key={field.id}>
@@ -85,6 +118,7 @@ function DisplayForm() {
                   />
                 </div>
               );
+
             case "date":
               return (
                 <div key={field.id}>
@@ -97,6 +131,7 @@ function DisplayForm() {
                   />
                 </div>
               );
+
             case "textarea":
               return (
                 <div key={field.id}>
@@ -108,6 +143,7 @@ function DisplayForm() {
                   />
                 </div>
               );
+
             case "select":
               return (
                 <div key={field.id}>
@@ -125,12 +161,13 @@ function DisplayForm() {
                   </select>
                 </div>
               );
+
             case "radio":
               return (
                 <div key={field.id}>
                   <label>{field.label}</label>
                   {field.options.map((opt) => (
-                    <label key={opt.value}>
+                    <label key={opt.value} style={{ marginLeft: "10px" }}>
                       <input
                         type="radio"
                         name={field.id}
@@ -142,10 +179,12 @@ function DisplayForm() {
                   ))}
                 </div>
               );
+
             default:
               return null;
           }
         })}
+
         <button type="submit">Submit</button>
       </form>
     </div>

@@ -9,6 +9,7 @@ import DefaultForm from "./Forms/DefaultForm.jsx";
 import DisplayForm from "./DisplayForm/DisplayForm.jsx";
 import FormsList from "./pages/formslist/formslist.jsx";
 import FormDataPage from "./pages/formdatapage/formdatapage.jsx";
+import FormBuilder from "./pages/FormBuilder/FormBuilder.jsx";
 
 function App() {
   const [authView, setAuthView] = useState("login");
@@ -80,6 +81,7 @@ function App() {
         {/* DEV FORM */}
         <Route path="/dev-form" element={<DefaultForm />} />
         <Route path="/display-form" element={<DisplayForm />} />
+        <Route path="/form-builder" element={<FormBuilder />} />
 
         {/* INDIVIDUAL FORM DATA PAGE */}
         <Route
