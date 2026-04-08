@@ -6,7 +6,7 @@ function DisplayForm() {
   const [error, setError] = useState(null);
 
   // Set the form ID you want to display
-  const formId = "form_Smiles_test2";
+  const formId = "form_Smiles_test3";
 
   useEffect(() => {
     fetch("http://127.0.0.1:5000/built-forms")
@@ -48,9 +48,10 @@ function DisplayForm() {
         responses[field.id] = e.target[field.id]?.value || "";
       }
     });
-
+     // Extract organization from formId: "form_Smiles_test2" -> "Smiles"
+  const orgFromId = selectedForm.id.split("_")[1] || "Unknown";
     const submissionPayload = {
-      organization: selectedForm.organization || "Unknown",
+      organization: orgFromId,
       formId: selectedForm.id,
       submittedAt: new Date().toISOString(),
       responses: responses,
@@ -59,7 +60,7 @@ function DisplayForm() {
     console.log("Submitting:", submissionPayload);
 
     try {
-      const res = await fetch("http://127.0.0.1:5000/form-submissions", {
+      const res = await fetch("http://127.0.0.1:5000/submit-form", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
