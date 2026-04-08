@@ -22,8 +22,8 @@ export default function FormsList({ setLoggedIn }) {
 
     // eventually this needs to navigate to a form builder page
     // I think this button will render FormBuilder.jsx eventually
-
-    alert("Create Form clicked! This will navigate to the form builder in the future.");
+    navigate(`/form-builder`);
+    //alert("Create Form clicked! This will navigate to the form builder in the future.");
   }
 
   useEffect(() => {
