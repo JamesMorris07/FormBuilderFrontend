@@ -4,7 +4,7 @@ import { useState } from "react";
 function FormBuilder() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [organization, setOrganization] = useState("Smiles"); // you can make this dynamic later
+  const [organization, setOrganization] = useState("Smiles"); //make this dynamic later
 
   const [fields, setFields] = useState([
     {
